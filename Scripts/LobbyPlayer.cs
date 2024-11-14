@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class LobbyPlayer : MonoBehaviour
+using Photon.Pun;
+
+public class LobbyPlayer : MonoBehaviourPun
 {
     [SerializeField]
     private Color[] colors = null;
@@ -11,4 +13,6 @@ public class LobbyPlayer : MonoBehaviour
 
         this.GetComponent<MeshRenderer>().material.color = colors[_playerNum - 1];
     }
+
+
 }
