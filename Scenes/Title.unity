@@ -771,7 +771,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1512505414}
         m_TargetAssemblyTypeName: TitleManager, Assembly-CSharp
-        m_MethodName: GoLobby
+        m_MethodName: Connect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1141,8 +1141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 947d58e14b8f90d4f90c9d15a5a8cdda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rungameVersion: 0.1
-  runnickName: 
+  gameVersion: 0.1
+  nickName: 
   goLobbyButton: {fileID: 1355472165}
   inputField: {fileID: 0}
 --- !u!1 &2018512782

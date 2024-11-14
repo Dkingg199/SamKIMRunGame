@@ -4,12 +4,11 @@ using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 using Photon.Realtime;
-using static System.Net.Mime.MediaTypeNames;
 
 public class TitleManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private string rungameVersion = "0.1"; //버전 체크
-    [SerializeField] private string runnickName = string.Empty; //닉네임
+    [SerializeField] private string gameVersion = "0.1"; //버전 체크
+    [SerializeField] private string nickName = string.Empty; //닉네임
     [SerializeField] private Button goLobbyButton = null;   //로비씬이동버튼
 
     private byte maxPlayerinLobby = 4;  //최대 인원
@@ -26,10 +25,10 @@ public class TitleManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    public void GoLobby()
+    public void Connect()
     {
         //닉네임 없으면 게임 접속 안됨.
-        if(string.IsNullOrEmpty(runnickName))
+        if(string.IsNullOrEmpty(nickName))
         {
             Debug.Log("닉네임을 입력해주세요.");
             return;
@@ -39,11 +38,12 @@ public class TitleManager : MonoBehaviourPunCallbacks
         if(PhotonNetwork.IsConnected)
         {
             PhotonNetwork.JoinRandomRoom();
+            //PhotonNetwork.JoinLobby();
         }
         else //
         {
-            Debug.LogFormat("Connect : {0}", rungameVersion);
-            PhotonNetwork.GameVersion = rungameVersion;
+            Debug.LogFormat("Connect : {0}", gameVersion);
+            PhotonNetwork.GameVersion = gameVersion;
             //포톤 클라우드에 접속을 시작하는 지점
             //접속에 성공하면 OnConnectedToMaster 메서드 호출
             PhotonNetwork.ConnectUsingSettings();
@@ -51,26 +51,27 @@ public class TitleManager : MonoBehaviourPunCallbacks
     }
 
     //InputField_NickName과 연결해 닉네임을 가져옴.
-    public void OnValueChangedNickName(string _RnickName)
+    public void OnValueChangedNickName(string _nickName)
     {
-        runnickName = _RnickName;
+        nickName = _nickName;
 
-        if (_RnickName.Length > 8)
+        if (_nickName.Length > 8)
         {
-            inputField.text = _RnickName.Substring(0, 8);
+            inputField.text = _nickName.Substring(0, 8);
         }
 
         //유저 이름 지정
-        PhotonNetwork.NickName = runnickName;
+        PhotonNetwork.NickName = nickName;
     }
 
     public override void OnConnectedToMaster()
     {
-        Debug.LogFormat("Connected to Master: {0}", runnickName);
+        Debug.LogFormat("Connected to Master: {0}", nickName);
 
         goLobbyButton.interactable = false;
 
         PhotonNetwork.JoinRandomRoom();
+        //JoinLobby();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -94,6 +95,14 @@ public class TitleManager : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("Lobby");
     }
 
+    //public void JoinLobby()
+    //{
+    //    Debug.Log("로비에 입장했습니다.");
+    //    PhotonNetwork.JoinLobby();
+
+    //    SceneManager.LoadScene("Lobby");
+    //}
+
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.LogErrorFormat("방 입장에 실패했습니다. ({0}): {1}", returnCode, message);
@@ -101,6 +110,6 @@ public class TitleManager : MonoBehaviourPunCallbacks
         goLobbyButton.interactable = true;
 
         Debug.Log("방 생성");
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayerinLobby });  
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayerinLobby });
     }
 }
