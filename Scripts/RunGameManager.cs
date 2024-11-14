@@ -2,6 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using System.Collections;
 
+// 구현 기능 : 순차적으로 player를 만듦.
 public class RunGameManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject playerPrefab = null;
@@ -18,10 +19,11 @@ public class RunGameManager : MonoBehaviourPunCallbacks
             //
         }
 
-        StartCoroutine(MakePlayer());
+        StartCoroutine(MakePlayerCoroutine());
+
     }
 
-    private IEnumerator MakePlayer()
+    private IEnumerator MakePlayerCoroutine()
     {
         float delay = 1f * PhotonNetwork.LocalPlayer.ActorNumber;
 
