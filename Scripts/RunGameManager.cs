@@ -6,7 +6,7 @@ using System.Collections;
 // 순차적으로 player를 만듦.
 
 // 구현해야 하는 기능
-// 
+// end에 도달시 끝났다고 check
 public class RunGameManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject playerPrefab = null;
@@ -44,4 +44,6 @@ public class RunGameManager : MonoBehaviourPunCallbacks
                 0);
         go.AddComponent<RunPlayerCtrl>();
     }
+
+
 }

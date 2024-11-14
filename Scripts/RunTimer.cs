@@ -34,6 +34,7 @@ public class RunTimer : MonoBehaviour
         timeGo.SetActive(true);
 
         StartCoroutine(TimerCountdown());
+
     }
 
     // 타이머가 흘러감.
@@ -41,11 +42,16 @@ public class RunTimer : MonoBehaviour
     {
         TextMeshProUGUI timerText = timeGo.GetComponent<TextMeshProUGUI>();
 
-        while (currentTime > 0)
+        while (currentTime < 0)
         {
             timerText.text = currentTime.ToString();
             yield return new WaitForSeconds(1f);
             currentTime--;
+
+            //if (currentTime < 0 || EnterAll())
+            //{
+            //    break;
+            //}
         }
         timerText.text = currentTime.ToString();
         yield return new WaitForSeconds(1f);
