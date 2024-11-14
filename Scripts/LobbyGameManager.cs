@@ -19,6 +19,8 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
     private LobbyPlayer lobbyPlayer = null;
     private LobbyPlayerNickname Lobbynickname = null;
 
+    private GameObject[] playerGoList = new GameObject[4];
+
 
     private void Start()
     {
@@ -55,20 +57,92 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
 
         // 스태틱으로 인덱스 번호를 관리해서 끄거나 장면이 넘어갈 경우 다시 0으로 초기화되게 만듦
         GameObject go = PhotonNetwork.Instantiate(playerPrefab.name, playerPosition[playcount].position, Quaternion.identity, 0);
+        //GameObject nick = PhotonNetwork.Instantiate(nicknamePrefab[playcount].name, playerPosition[playcount].position, Quaternion.identity, 0);
+
+        //GameObject playerInfoGo = GameObject.FindGameObjectWithTag("PlayerInfo");
+        //nick.transform.SetParent(playerInfoGo.transform);
+
+        //Lobbynickname = nick.GetComponent<LobbyPlayerNickname>();
+        //Lobbynickname.UpdatePosition(playerPosition[playcount].position);
+        //Lobbynickname.TextName();
+
+
+        photonView.RPC("ApplyPlayerList", RpcTarget.All);
+        //SetNickname(playcount);
+
+        //lobbyPlayer = go.GetComponent<LobbyPlayer>();
+        Debug.Log(lobbyPlayer);
+        //lobbyPlayer.SetMaterial(PhotonNetwork.CurrentRoom.PlayerCount);
+    }
+
+    
+    private void SetNickname(int playcount)
+    {
         GameObject nick = PhotonNetwork.Instantiate(nicknamePrefab[playcount].name, playerPosition[playcount].position, Quaternion.identity, 0);
 
         GameObject playerInfoGo = GameObject.FindGameObjectWithTag("PlayerInfo");
         nick.transform.SetParent(playerInfoGo.transform);
 
+
         Lobbynickname = nick.GetComponent<LobbyPlayerNickname>();
-        Lobbynickname.UpdatePosition(playerPosition[playcount].position);
-        Lobbynickname.SetNickName();
-
-
-        lobbyPlayer = go.GetComponent<LobbyPlayer>();
-        Debug.Log(lobbyPlayer);
-        lobbyPlayer.SetMaterial(PhotonNetwork.CurrentRoom.PlayerCount);
+        Lobbynickname.SetText(playerPosition[playcount].position);
     }
+
+    [PunRPC]
+    public void ApplyPlayerList()
+    {
+        // 현재 방에 접속해 있는 플레이어의 수
+        Debug.LogError("CurrentRoom PlayerCount : " + PhotonNetwork.CurrentRoom.PlayerCount);
+
+        // 현재 생성되어 있는 모든 포톤뷰 가져오기
+        //PhotonView[] photonViews = FindObjectsOfType<PhotonView>();
+        // 만들어진 순서를 알 수 없으니
+        // 배열에 넣음
+        PhotonView[] photonViews =
+            FindObjectsByType<PhotonView>(FindObjectsSortMode.None);
+
+        // 매번 재정렬을 하는게 좋으므로 플레이어 게임오브젝트 리스트를 초기화
+        System.Array.Clear(playerGoList, 0, playerGoList.Length);
+
+        // 현재 생성되어 있는 포톤뷰 전체와
+        // 접속중인 플레이어들의 액터넘버를 비교해,
+        // 액터넘버를 기준으로 플레이어 게임오브젝트 배열을 채움
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; ++i)
+        {
+            // 키는 0이 아닌 1부터 시작
+            int key = i + 1;
+            for (int j = 0; j < photonViews.Length; ++j)
+            {
+                // 만약 PhotonNetwork.Instantiate를 통해서 생성된 포톤뷰가 아니라면 넘김
+                if (photonViews[j].isRuntimeInstantiated == false) continue;
+                // 만약 현재 키 값이 딕셔너리 내에 존재하지 않는다면 넘김
+                // 0부터가 아니라 1부터 시작하기 때문에 1부터 넣음
+                if (PhotonNetwork.CurrentRoom.Players.ContainsKey(key) == false) continue;
+
+                // 포톤뷰의 액터넘버
+                int viewNum = photonViews[j].Owner.ActorNumber;
+                // 접속중인 플레이어의 액터넘버
+                int playerNum = PhotonNetwork.CurrentRoom.Players[key].ActorNumber;
+
+                Debug.LogError(viewNum + " " + playerNum);
+
+                // 액터넘버가 같은 오브젝트가 있다면,
+                if (viewNum == playerNum)
+                {
+                    Debug.Log("viewNum == playerNum");
+                    // 실제 게임오브젝트를 배열에 추가
+                    playerGoList[viewNum - 1] = photonViews[j].gameObject;
+                    // 게임오브젝트 이름도 알아보기 쉽게 변경
+                    playerGoList[viewNum - 1].name = "Player_" + photonViews[j].Owner.NickName;
+
+                    //SetNickname(PhotonNetwork.CountOfPlayersInRooms);
+                    //photonViews[j].gameObject.GetComponent<LobbyPlayer>().SetMaterial(viewNum);
+                }
+            }
+        }
+
+    }
+
 
 
     //private void SpawnPlayer()
