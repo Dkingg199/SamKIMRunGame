@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 using Photon.Realtime;
+using static System.Net.Mime.MediaTypeNames;
 
 public class TitleManager : MonoBehaviourPunCallbacks
 {
@@ -12,6 +13,8 @@ public class TitleManager : MonoBehaviourPunCallbacks
     [SerializeField] private Button goLobbyButton = null;   //로비씬이동버튼
 
     private byte maxPlayerinLobby = 4;  //최대 인원
+
+    public InputField inputField;   //닉네임 적는 칸
 
     //닉네임 없는 것 체크
     //PhotonNetwork에 연결되었는지 확인
@@ -51,6 +54,11 @@ public class TitleManager : MonoBehaviourPunCallbacks
     public void OnValueChangedNickName(string _RnickName)
     {
         runnickName = _RnickName;
+
+        if (_RnickName.Length > 8)
+        {
+            inputField.text = _RnickName.Substring(0, 8);
+        }
 
         //유저 이름 지정
         PhotonNetwork.NickName = runnickName;
