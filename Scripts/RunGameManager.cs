@@ -23,7 +23,7 @@ public class RunGameManager : MonoBehaviourPunCallbacks
 
     private IEnumerator MakePlayer()
     {
-        float delay = 3f * PhotonNetwork.LocalPlayer.ActorNumber;
+        float delay = 1f * PhotonNetwork.LocalPlayer.ActorNumber;
 
         yield return new WaitForSeconds(delay);
 
@@ -32,5 +32,6 @@ public class RunGameManager : MonoBehaviourPunCallbacks
                 playerPosition[PhotonNetwork.LocalPlayer.ActorNumber - 1],
                 Quaternion.identity,
                 0);
+        go.AddComponent<RunPlayerCtrl>();
     }
 }
