@@ -2,7 +2,11 @@ using Photon.Pun;
 using UnityEngine;
 using System.Collections;
 
-// 구현 기능 : 순차적으로 player를 만듦.
+// 구현 기능
+// 순차적으로 player를 만듦.
+
+// 구현해야 하는 기능
+// 
 public class RunGameManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject playerPrefab = null;
@@ -20,6 +24,10 @@ public class RunGameManager : MonoBehaviourPunCallbacks
         }
 
         StartCoroutine(MakePlayerCoroutine());
+
+        // 게임 끝남을 콜백 받음
+        // result창을 setActive(true)
+        // 5초뒤 다시 Looby Scene으로 돌아감.
 
     }
 
