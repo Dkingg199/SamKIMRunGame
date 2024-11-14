@@ -1,7 +1,12 @@
 using UnityEngine;
+using TMPro;
 
 public class LobbyPlayerNickname : MonoBehaviour
 {
+    [SerializeField]
+    private TextMeshProUGUI nametext = null;
+
+    public TextMeshProUGUI Nametext { get { return nametext; } }
     public Vector3 UpdatePosition(Vector3 _pos)
     {
         Vector3 worldToScreen = Camera.main.WorldToScreenPoint(_pos);
