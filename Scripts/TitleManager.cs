@@ -7,20 +7,22 @@ using Photon.Realtime;
 
 public class TitleManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private string rungameVersion = "0.1";
-    [SerializeField] private string runnickName = string.Empty;
-    [SerializeField] private Button goLobbyButton = null;
+    [SerializeField] private string rungameVersion = "0.1"; //버전 체크
+    [SerializeField] private string runnickName = string.Empty; //닉네임
+    [SerializeField] private Button goLobbyButton = null;   //로비씬이동버튼
 
-    private byte maxPlayerinLobby = 4;
-
-    private void Start()
-    {
-        goLobbyButton.interactable = true;
-    }
+    private byte maxPlayerinLobby = 4;  //최대 인원
 
     //닉네임 없는 것 체크
     //PhotonNetwork에 연결되었는지 확인
     //버전 확인하고 연결
+    private void Awake()
+    {
+        // 마스터가 PhotonNetwork.LoadLevel()을 호출하면,
+        // 모든 플레이어가 동일한 레벨을 자동으로 로드
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
     public void GoLobby()
     {
         //닉네임 없으면 게임 접속 안됨.
@@ -77,7 +79,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
             { MaxPlayers = maxPlayerinLobby });
     }
 
-    public override void OnJoinedLobby()
+    public override void OnJoinedRoom()
     {
         Debug.Log("방에 입장했습니다.");
         //각자 씬을 호출
