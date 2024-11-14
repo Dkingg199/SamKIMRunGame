@@ -1,7 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-// 구현 기능 : 카운트다운
+// 구현 기능
+// 카운트다운
+
+// 구현 해야하는 기능
+
 public class RunCountDown : MonoBehaviour
 {
     // 카운트 다운이 끝난걸 알려주기 위한 델리게이트

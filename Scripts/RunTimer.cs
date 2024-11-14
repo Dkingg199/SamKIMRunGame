@@ -3,6 +3,11 @@ using UnityEngine;
 using System.Collections;
 using TMPro;
 
+// 기능 구현
+// 타이머가 흘러가는 기능?
+
+// 구현해야 하는 기능
+
 public class RunTimer : MonoBehaviour
 {
     [SerializeField] private RunCountDown cnt = null;
@@ -46,5 +51,7 @@ public class RunTimer : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         timeGo.SetActive(false);
+
+        // 만약 게임이 끝났을때(플레이어가 다 들어오거나, 시간이 다됨) => 타이머 end 
     }
 }
