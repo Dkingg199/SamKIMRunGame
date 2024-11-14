@@ -8,15 +8,15 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject playerPrefab = null;
     [SerializeField]
-    private GameObject nicknamePrefab = null;
+    private GameObject[] nicknamePrefab = null;
     [SerializeField]
     private Transform[] playerPosition = null;
-    [SerializeField]
-    private TextMeshProUGUI[] nametext = null;
+    //[SerializeField]
+    //private TextMeshProUGUI[] nametext = null;
 
 
     private LobbyPlayer lobbyPlayer = null;
-    LobbyPlayerNickname nick = null;
+    private LobbyPlayerNickname Lobbynickname = null;
 
     private void Start()
     {
@@ -44,18 +44,22 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
     {
         GameObject[] go = new GameObject[4];
         GameObject[] nickname = new GameObject[4];
+
         // 스태틱으로 인덱스 번호를 관리해서 끄거나 장면이 넘어갈 경우 다시 0으로 초기화되게 만듦
         for (int i = 0; i < playerPosition.Length; i++) {
-
+            // 플레이어, 닉네임 생성
             go[i] = Instantiate(playerPrefab, playerPosition[i].position, Quaternion.identity);
-            nickname[i] = Instantiate(nicknamePrefab);
+            nickname[i] = Instantiate(nicknamePrefab[i]);
+
+            // 캔버스에있는 PlayerInfo를 찾아서 그 위치에 닉네임을 이동시킴
             GameObject playerInfoGo = GameObject.FindGameObjectWithTag("PlayerInfo");
             nickname[i].transform.SetParent(playerInfoGo.transform);
-            nick = nickname[i].GetComponent<LobbyPlayerNickname>();
-            nick.UpdatePosition(playerPosition[i].position);
 
-            nametext[i].text = "Player1";
+            // 닉네임 프리팹을 1~4번 순회해서 각 1~4번 플레이어 자리에 위치시킴
+            Lobbynickname = nickname[i].GetComponent<LobbyPlayerNickname>();
+            Lobbynickname.UpdatePosition(playerPosition[i].position);
 
+            // 플레이어 색을 지정함
             lobbyPlayer = go[i].GetComponent<LobbyPlayer>();
             lobbyPlayer.SetMaterial(i+1);
         }

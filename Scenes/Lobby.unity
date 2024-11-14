@@ -664,17 +664,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 2278488854067214241, guid: ce38fb2e3eaf55340af63f09b37c6b42, type: 3}
-  nicknamePrefab: {fileID: 5012288893713038200, guid: cd8221810af901e4abfadfa6197bf0ce, type: 3}
+  nicknamePrefab:
+  - {fileID: 5012288893713038200, guid: cd8221810af901e4abfadfa6197bf0ce, type: 3}
+  - {fileID: 5012288893713038200, guid: 2f126ed2048c72a49b00df553ec68f66, type: 3}
+  - {fileID: 5012288893713038200, guid: 9389ffe9023c3694e8ac0e60536c552e, type: 3}
+  - {fileID: 5012288893713038200, guid: 568beb0c45bc9f64d8b2ead0fb357592, type: 3}
   playerPosition:
   - {fileID: 1630252210}
   - {fileID: 235671506}
   - {fileID: 1140965591}
   - {fileID: 1247958310}
-  nametext:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &555944432
 GameObject:
   m_ObjectHideFlags: 0
