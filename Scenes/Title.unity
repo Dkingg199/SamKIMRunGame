@@ -369,7 +369,7 @@ MonoBehaviour:
   m_text: "\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0600fb83f5ebead41bbc9b4b34eaad14, type: 2}
-  m_sharedMaterial: {fileID: 3305229462252514059, guid: 0600fb83f5ebead41bbc9b4b34eaad14, type: 2}
+  m_sharedMaterial: {fileID: 6346627560257212114, guid: 0600fb83f5ebead41bbc9b4b34eaad14, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1021,7 +1021,7 @@ MonoBehaviour:
   m_text: Enter text...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0600fb83f5ebead41bbc9b4b34eaad14, type: 2}
-  m_sharedMaterial: {fileID: 3305229462252514059, guid: 0600fb83f5ebead41bbc9b4b34eaad14, type: 2}
+  m_sharedMaterial: {fileID: 6346627560257212114, guid: 0600fb83f5ebead41bbc9b4b34eaad14, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
