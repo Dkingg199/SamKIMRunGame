@@ -1,12 +1,13 @@
 using UnityEngine;
-
+using TMPro;
 using Photon.Pun;
-using Photon.Pun.Demo.Cockpit;
 
 public class LobbyPlayer : MonoBehaviourPun
 {
     [SerializeField]
     private Color[] colors = null;
+    [SerializeField]
+    private TextMeshPro nameText = null;
     private bool isReady = false;
 
     public bool IsReady { get { return isReady; } }
@@ -16,5 +17,14 @@ public class LobbyPlayer : MonoBehaviourPun
         if (_playerNum > colors.Length) return;
 
         this.GetComponent<MeshRenderer>().material.color = colors[_playerNum - 1];
+    }
+
+    public void TextName()
+    {
+        if (!photonView.IsMine) return;
+        if (nameText.text.Length != 0) return;
+        
+        nameText.text = PhotonNetwork.NickName;
+        
     }
 }
