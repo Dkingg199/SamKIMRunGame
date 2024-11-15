@@ -14,8 +14,10 @@ public class RunTimer : MonoBehaviour
     public TimeEndDelegate TimeEndCallback;
 
     [SerializeField] private GameObject timeGo = null;
+    [SerializeField] private RunGameManager RunGM = null;
     private float currentTime;
     private RunCountDown cnt = null;
+    
 
     private void Awake()
     {
@@ -27,7 +29,11 @@ public class RunTimer : MonoBehaviour
         // 카운트 다운이 끝나면 실행되는 타이머
         cnt = GameObject.FindGameObjectWithTag("RunCountDown").GetComponent<RunCountDown>();
         cnt.CountdownFinishedCallback += StartTimer;
-        
+
+        // 모두 골인시 타이머 멈춤
+        RunGM.AllGoalInCallback += StopTimer;
+
+
     }
 
     // 타이머 실행
@@ -58,5 +64,10 @@ public class RunTimer : MonoBehaviour
         timeGo.SetActive(false);
 
         TimeEndCallback?.Invoke();
+    }
+
+    private void StopTimer()
+    {
+        this.gameObject.SetActive(false);
     }
 }

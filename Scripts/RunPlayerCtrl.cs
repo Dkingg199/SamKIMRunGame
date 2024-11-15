@@ -63,14 +63,14 @@ public class RunPlayerCtrl : MonoBehaviourPun
         // Goal까지 걸린 시간을 알려줌.
         if (_other.CompareTag("RunGoal"))
         {
-            elapsedTime = Time.time - startTime; 
+            elapsedTime = Time.time - startTime;
+
+            // 도착한걸 알려줘야 함. -> RGM한테 알려줘서 (1번이 도착했다 => 모든 컴에 1번도착!) RPC
+            RunGM = GameObject.FindGameObjectWithTag("RunGameManager").GetComponent<RunGameManager>();
+            RunGM.photonView.RPC("ApplyGoalIn", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+
+            isControl = false;
         }
-
-        // 도착한걸 알려줘야 함. -> RGM한테 알려줘서 (1번이 도착했다 => 모든 컴에 1번도착!) RPC
-        RunGM = GameObject.FindGameObjectWithTag("RunGameManager").GetComponent<RunGameManager>();
-        RunGM.photonView.RPC("ApplyGoalIn", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
-
-        isControl = false;
     }
 
     private void NotMove()

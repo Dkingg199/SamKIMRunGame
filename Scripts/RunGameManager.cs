@@ -83,7 +83,7 @@ public class RunGameManager : MonoBehaviourPunCallbacks
     {
         isGoalIn[_actNum - 1] = true;
 
-        for(int i = 0; i < 4; ++i)
+        for(int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; ++i)
         {
             if (!isGoalIn[i]) return;
         }
