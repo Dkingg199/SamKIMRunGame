@@ -10,9 +10,12 @@ using TMPro;
 
 public class RunTimer : MonoBehaviour
 {
-    [SerializeField] private RunCountDown cnt = null;
+    public delegate void TimeEndDelegate();
+    public TimeEndDelegate TimeEndCallback;
+
     [SerializeField] private GameObject timeGo = null;
     private float currentTime;
+    private RunCountDown cnt = null;
 
     private void Awake()
     {
@@ -22,10 +25,9 @@ public class RunTimer : MonoBehaviour
     private void Start()
     {
         // 카운트 다운이 끝나면 실행되는 타이머
-        if (cnt != null)
-        {
-            cnt.CountdownFinished = StartTimer;
-        }
+        cnt = GameObject.FindGameObjectWithTag("RunCountDown").GetComponent<RunCountDown>();
+        cnt.CountdownFinishedCallback += StartTimer;
+        
     }
 
     // 타이머 실행
@@ -42,22 +44,19 @@ public class RunTimer : MonoBehaviour
     {
         TextMeshProUGUI timerText = timeGo.GetComponent<TextMeshProUGUI>();
 
-        while (currentTime < 0)
+        while (currentTime > 0)
         {
+            // 끝났을때 break;
+
             timerText.text = currentTime.ToString();
             yield return new WaitForSeconds(1f);
             currentTime--;
-
-            //if (currentTime < 0 || EnterAll())
-            //{
-            //    break;
-            //}
         }
         timerText.text = currentTime.ToString();
         yield return new WaitForSeconds(1f);
 
         timeGo.SetActive(false);
 
-        // 만약 게임이 끝났을때(플레이어가 다 들어오거나, 시간이 다됨) => 타이머 end 
+        TimeEndCallback?.Invoke();
     }
 }

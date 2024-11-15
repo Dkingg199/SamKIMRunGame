@@ -16,8 +16,12 @@ public class RunPlayerCtrl : MonoBehaviourPun
 {
     [SerializeField] private Vector3 moveDis = Vector3.zero;
     private RunCountDown cnt = null;
+    private RunGameManager RunGM = null;
     private bool isControl = false;
     private float startTime;
+    private float elapsedTime;
+
+    public float ElapsedTime { get{ return elapsedTime; } }
 
     private void Awake()
     {
@@ -27,7 +31,7 @@ public class RunPlayerCtrl : MonoBehaviourPun
     private void Start()
     {
         cnt = GameObject.FindGameObjectWithTag("RunCountDown").GetComponent<RunCountDown>();
-        cnt.CountdownFinished = PlayerStart;
+        cnt.CountdownFinishedCallback += PlayerStart;
     }
 
     // moveDis 만큼 플레이어가 이동
@@ -51,7 +55,11 @@ public class RunPlayerCtrl : MonoBehaviourPun
         // Goal까지 걸린 시간을 알려줌.
         if (_other.CompareTag("RunGoal"))
         {
-            float elapsedTime = Time.time - startTime; 
+            elapsedTime = Time.time - startTime; 
         }
+
+        // 도착한걸 알려줘야 함. -> RGM한테 알려줘서 (1번이 도착했다 => 모든 컴에 1번도착!) RPC
+        RunGM = GameObject.FindGameObjectWithTag("RunGameManager").GetComponent<RunGameManager>();
+        RunGM.photonView.RPC("ApplyGoalIn", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
     }
 }

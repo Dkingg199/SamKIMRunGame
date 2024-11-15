@@ -2331,13 +2331,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272752216}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
-  m_LocalPosition: {x: 0, y: 12, z: -15}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1272752220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2713,7 +2713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51eda0d973f87ee45be99383108363c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cnt: {fileID: 1997334136}
   timeGo: {fileID: 1860026617}
 --- !u!1 &1456910224
 GameObject:
@@ -2891,9 +2890,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1486850152}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.55, z: 0}
-  m_LocalScale: {x: 30, y: 1, z: 20}
+  m_LocalScale: {x: 36.9, y: 1, z: 20.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 867287327}
@@ -2902,7 +2901,7 @@ Transform:
   - {fileID: 1266313630}
   - {fileID: 1489873444}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1489873443
 GameObject:
   m_ObjectHideFlags: 0
@@ -3119,10 +3118,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 2278488854067214241, guid: ce38fb2e3eaf55340af63f09b37c6b42, type: 3}
   playerPosition:
-  - {x: -14, y: 0, z: 5}
-  - {x: -14, y: 0, z: 1.5}
-  - {x: -14, y: 0, z: -2.4}
-  - {x: -14, y: 0, z: -6.2}
+  - {x: -16, y: 4.05, z: 7.5}
+  - {x: -16, y: 4.05, z: 2.5}
+  - {x: -16, y: 4.05, z: -2.5}
+  - {x: -16, y: 4.05, z: -7.5}
 --- !u!1 &1622199118
 GameObject:
   m_ObjectHideFlags: 0
@@ -3951,7 +3950,7 @@ GameObject:
   - component: {fileID: 1997334136}
   m_Layer: 5
   m_Name: CountDown
-  m_TagString: Untagged
+  m_TagString: RunCountDown
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
