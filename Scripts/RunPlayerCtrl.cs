@@ -15,6 +15,7 @@ using UnityEngine;
 public class RunPlayerCtrl : MonoBehaviourPun
 {
     [SerializeField] private Vector3 moveDis = Vector3.zero;
+    private Color[] colors = new Color[4];
     private RunCountDown cnt = null;
     private RunGameManager RunGM = null;
     private bool isControl = false;
@@ -27,6 +28,11 @@ public class RunPlayerCtrl : MonoBehaviourPun
     private void Awake()
     {
         moveDis = new Vector3(0.5f, 0f, 0f);
+
+        colors[0] = Color.red;
+        colors[1] = Color.yellow;
+        colors[2] = Color.green;
+        colors[3] = Color.blue;
     }
 
     private void Start()
@@ -48,6 +54,11 @@ public class RunPlayerCtrl : MonoBehaviourPun
         if (isControl && Input.GetKeyDown(KeyCode.Space))
         {
             transform.Translate(moveDis);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Debug.LogError(" 현재 플레이어의 actNum :  " + PhotonNetwork.LocalPlayer.ActorNumber);
         }
     }
 
@@ -76,5 +87,14 @@ public class RunPlayerCtrl : MonoBehaviourPun
     private void NotMove()
     {
         isControl = false;
+    }
+
+    public void SetMaterial(int _playerNum)
+    {
+
+        Debug.LogError(_playerNum + " : " + colors.Length);
+        if (_playerNum > colors.Length) return;
+
+        this.GetComponent<MeshRenderer>().material.color = colors[_playerNum - 1];
     }
 }

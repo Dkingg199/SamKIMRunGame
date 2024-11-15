@@ -2692,6 +2692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeGo: {fileID: 1860026617}
+  RunGM: {fileID: 1541397445}
 --- !u!1 &1456910224
 GameObject:
   m_ObjectHideFlags: 0
@@ -3128,13 +3129,18 @@ MonoBehaviour:
   - {x: -16, y: 4.05, z: 2.5}
   - {x: -16, y: 4.05, z: -2.5}
   - {x: -16, y: 4.05, z: -7.5}
-  playerColors:
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0.99296916, b: 0, a: 0}
-  - {r: 0, g: 1, b: 0.008930683, a: 0}
-  - {r: 0, g: 0.108952045, b: 1, a: 0}
+  playerMaterials:
+  - {fileID: 2100000, guid: 17ef6ae49bf4f494690d692807c0bcc0, type: 2}
+  - {fileID: 2100000, guid: 761ad66bfa4fc994eb75996fe7ec1218, type: 2}
+  - {fileID: 2100000, guid: 48430e94fe5a6f846b25a9a275f3b38b, type: 2}
+  - {fileID: 2100000, guid: 9a4d2705a9bddbd47868a7d443cb1571, type: 2}
   timer: {fileID: 1456011908}
   resultUI: {fileID: 2101328030}
+  playerList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1622199118
 GameObject:
   m_ObjectHideFlags: 0
