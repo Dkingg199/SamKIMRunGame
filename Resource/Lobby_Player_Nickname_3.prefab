@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 1910427932311152997}
   m_Layer: 5
   m_Name: Lobby_Player_Nickname_3
-  m_TagString: Untagged
+  m_TagString: NickName
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

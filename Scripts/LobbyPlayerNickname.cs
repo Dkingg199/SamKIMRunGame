@@ -11,13 +11,13 @@ public class LobbyPlayerNickname : MonoBehaviourPun
 
     public TextMeshProUGUI Nametext { get { return nametext; } }
 
-    public void SetText(Vector3 _pos)
-    {
-        photonView.RPC("UpdatePosition", RpcTarget.All, _pos);
-        photonView.RPC("TextName", RpcTarget.All);
-    }
+    //public void SetText(Vector3 _pos)
+    //{
+    //    photonView.RPC("UpdatePosition", RpcTarget.All, _pos);
+    //    photonView.RPC("TextName", RpcTarget.All);
+    //}
 
-    [PunRPC]
+    //[PunRPC]
     public Vector3 UpdatePosition(Vector3 _pos)
     {
         Vector3 worldToScreen = Camera.main.WorldToScreenPoint(_pos);
@@ -27,9 +27,21 @@ public class LobbyPlayerNickname : MonoBehaviourPun
         return transform.position;
     }
 
-    [PunRPC]
+    //[PunRPC]
     public void TextName()
     {
         nametext.text = PhotonNetwork.NickName;
+    }
+
+    public void SetNickname(Vector3 _pos)
+    {
+        int playcount = PhotonNetwork.CountOfPlayersInRooms;
+
+        GameObject playerInfoGo = GameObject.FindGameObjectWithTag("PlayerInfo");
+        transform.SetParent(playerInfoGo.transform);
+
+
+        TextName();
+        UpdatePosition(_pos);
     }
 }
