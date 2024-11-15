@@ -4,16 +4,18 @@ using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 
 public class TitleManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private string gameVersion = "0.1"; //버전 체크
     [SerializeField] private string nickName = string.Empty; //닉네임
     [SerializeField] private Button goLobbyButton = null;   //로비씬이동버튼
+    [SerializeField] private Button ExitGameButton = null;  //게임종료버튼
 
     private byte maxPlayerinLobby = 4;  //최대 인원
 
-    public InputField inputField;   //닉네임 적는 칸
+    [SerializeField] private TMP_InputField inputField;  //닉네임 적는 칸
 
     //닉네임 없는 것 체크
     //PhotonNetwork에 연결되었는지 확인
@@ -23,6 +25,15 @@ public class TitleManager : MonoBehaviourPunCallbacks
         // 마스터가 PhotonNetwork.LoadLevel()을 호출하면,
         // 모든 플레이어가 동일한 레벨을 자동으로 로드
         PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
+    private void Start()
+    {
+        if(ExitGameButton != false)
+        {
+            ExitGameButton.onClick.AddListener(ExitGame);
+        }
+        inputField.characterLimit = 8;
     }
 
     public void Connect()
@@ -53,8 +64,12 @@ public class TitleManager : MonoBehaviourPunCallbacks
     //InputField_NickName과 연결해 닉네임을 가져옴.
     public void OnValueChangedNickName(string _nickName)
     {
+        if (_nickName.Length > 8) return;
+
         nickName = _nickName;
 
+            
+        //닉네임 값이 8글자보다 길다면 8자까지만 표현
         if (_nickName.Length > 8)
         {
             inputField.text = _nickName.Substring(0, 8);
@@ -74,6 +89,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
         //JoinLobby();
     }
 
+    //연결 실패 후, 방 재생성 메서드 호출 메서드
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarningFormat("Disconnected: {0}", cause);
@@ -88,21 +104,15 @@ public class TitleManager : MonoBehaviourPunCallbacks
             { MaxPlayers = maxPlayerinLobby });
     }
 
+    //방 입장 함수 (Lobby scene 이동)
     public override void OnJoinedRoom()
     {
         Debug.Log("방에 입장했습니다.");
-        //각자 씬을 호출
+        //Lobby 씬 호출
         SceneManager.LoadScene("Lobby");
     }
 
-    //public void JoinLobby()
-    //{
-    //    Debug.Log("로비에 입장했습니다.");
-    //    PhotonNetwork.JoinLobby();
-
-    //    SceneManager.LoadScene("Lobby");
-    //}
-
+    //방 입장 실패 함수
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.LogErrorFormat("방 입장에 실패했습니다. ({0}): {1}", returnCode, message);
@@ -111,5 +121,18 @@ public class TitleManager : MonoBehaviourPunCallbacks
 
         Debug.Log("방 생성");
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayerinLobby });
+    }
+
+    //게임 종료 기능 메서드
+    private void ExitGame()
+    {
+        Debug.Log("게임 종료");
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // 에디터에서 실행 중지
+#else
+        Application.Quit(); // 빌드된 게임 종료
+#endif
+
     }
 }
