@@ -17,9 +17,4 @@ public class LobbyPlayer : MonoBehaviourPun
 
         this.GetComponent<MeshRenderer>().material.color = colors[_playerNum - 1];
     }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/Run
 }
