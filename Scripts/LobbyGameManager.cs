@@ -61,6 +61,7 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
 
         // 스태틱으로 인덱스 번호를 관리해서 끄거나 장면이 넘어갈 경우 다시 0으로 초기화되게 만듦
         GameObject go = PhotonNetwork.Instantiate(playerPrefab.name, playerPosition[playcount].position, Quaternion.identity, 0);
+        GameObject nick = PhotonNetwork.Instantiate(nicknamePrefab[playcount].name, playerPosition[playcount].position, Quaternion.identity, 0);
         //GameObject nick = PhotonNetwork.Instantiate(nicknamePrefab[playcount].name, playerPosition[playcount].position, Quaternion.identity, 0);
 
         //GameObject playerInfoGo = GameObject.FindGameObjectWithTag("PlayerInfo");
@@ -72,25 +73,10 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
 
 
         photonView.RPC("ApplyPlayerList", RpcTarget.All);
-        //SetNickname(playcount);
-
-        //lobbyPlayer = go.GetComponent<LobbyPlayer>();
-        Debug.Log(lobbyPlayer);
-        //lobbyPlayer.SetMaterial(PhotonNetwork.CurrentRoom.PlayerCount);
     }
 
 
-    private void SetNickname(int playcount)
-    {
-        GameObject nick = PhotonNetwork.Instantiate(nicknamePrefab[playcount].name, playerPosition[playcount].position, Quaternion.identity, 0);
 
-        GameObject playerInfoGo = GameObject.FindGameObjectWithTag("PlayerInfo");
-        nick.transform.SetParent(playerInfoGo.transform);
-
-
-        Lobbynickname = nick.GetComponent<LobbyPlayerNickname>();
-        Lobbynickname.SetText(playerPosition[playcount].position);
-    }
 
     [PunRPC]
     public void ApplyPlayerList()
@@ -128,23 +114,27 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
                 // 접속중인 플레이어의 액터넘버
                 int playerNum = PhotonNetwork.CurrentRoom.Players[key].ActorNumber;
 
-                Debug.LogError(viewNum + " " + playerNum);
+                Debug.LogError("viewNum : " + viewNum + ", playerNum " + playerNum);
 
                 // 액터넘버가 같은 오브젝트가 있다면,
                 if (viewNum == playerNum)
                 {
                     Debug.Log("viewNum == playerNum");
+                    Debug.Log("PhotonViews.Length" + photonViews.Length);
                     // 실제 게임오브젝트를 배열에 추가
                     playerGoList[viewNum - 1] = photonViews[j].gameObject;
                     // 게임오브젝트 이름도 알아보기 쉽게 변경
                     playerGoList[viewNum - 1].name = "Player_" + photonViews[j].Owner.NickName;
 
-                    //SetNickname(PhotonNetwork.CountOfPlayersInRooms);
-                    //photonViews[j].gameObject.GetComponent<LobbyPlayer>().SetMaterial(viewNum);
+                    if (photonViews[j].gameObject.CompareTag("Player"))
+                        photonViews[j].gameObject.GetComponent<LobbyPlayer>().SetMaterial(viewNum);
+                    else if (photonViews[j].gameObject.CompareTag("NickName"))
+                        photonViews[j].gameObject.GetComponent<LobbyPlayerNickname>().SetNickname(playerPosition[i].position);
                 }
             }
         }
     }
+
 
     // 들어올때 readycnt를 동기화 시켜주는거
 
