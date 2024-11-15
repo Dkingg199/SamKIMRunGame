@@ -2,6 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 
 using Photon.Realtime;
+using UnityEngine.UI;
 
 
 public class LobbyGameManager : MonoBehaviourPunCallbacks
@@ -14,6 +15,9 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
     private Transform[] playerPosition = null;
     //[SerializeField]
     //private TextMeshProUGUI[] nametext = null;
+    private int readyCnt = 0;
+    [SerializeField]
+    private Button readyBtn = null;
 
 
     private LobbyPlayer lobbyPlayer = null;
@@ -75,7 +79,7 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
         //lobbyPlayer.SetMaterial(PhotonNetwork.CurrentRoom.PlayerCount);
     }
 
-    
+
     private void SetNickname(int playcount)
     {
         GameObject nick = PhotonNetwork.Instantiate(nicknamePrefab[playcount].name, playerPosition[playcount].position, Quaternion.identity, 0);
@@ -140,8 +144,35 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
                 }
             }
         }
+    }
+
+    // 들어올때 readycnt를 동기화 시켜주는거
+
+
+    public void ClickReady()
+    {
+        readyBtn.interactable = false;
+
+        photonView.RPC("ApplyReady", RpcTarget.All);
 
     }
+
+    [PunRPC]
+    public void ApplyReady()
+    {
+        ++readyCnt;
+        //photonView.RPC("SynReady", RpcTarget.All);
+
+        if (!(readyCnt == PhotonNetwork.CurrentRoom.PlayerCount)) return;
+
+        PhotonNetwork.LoadLevel("Run");
+    }
+
+    //[PunRPC]
+    //public void SynReady(int _readyCnt)
+    //{
+    //    readyCnt = _readyCnt;
+    //}
 
 
 
