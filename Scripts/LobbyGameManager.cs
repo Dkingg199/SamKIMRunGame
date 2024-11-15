@@ -61,7 +61,6 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
 
         // 스태틱으로 인덱스 번호를 관리해서 끄거나 장면이 넘어갈 경우 다시 0으로 초기화되게 만듦
         GameObject go = PhotonNetwork.Instantiate(playerPrefab.name, playerPosition[playcount].position, Quaternion.identity, 0);
-        GameObject nick = PhotonNetwork.Instantiate(nicknamePrefab[playcount].name, playerPosition[playcount].position, Quaternion.identity, 0);
         //GameObject nick = PhotonNetwork.Instantiate(nicknamePrefab[playcount].name, playerPosition[playcount].position, Quaternion.identity, 0);
 
         //GameObject playerInfoGo = GameObject.FindGameObjectWithTag("PlayerInfo");
@@ -128,8 +127,8 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
 
                     if (photonViews[j].gameObject.CompareTag("Player"))
                         photonViews[j].gameObject.GetComponent<LobbyPlayer>().SetMaterial(viewNum);
-                    else if (photonViews[j].gameObject.CompareTag("NickName"))
-                        photonViews[j].gameObject.GetComponent<LobbyPlayerNickname>().SetNickname(playerPosition[i].position);
+                    //else if (photonViews[j].gameObject.CompareTag("NickName"))
+                    //    photonViews[j].gameObject.GetComponent<LobbyPlayerNickname>().SetNickname(playerPosition[i].position);
                 }
             }
         }

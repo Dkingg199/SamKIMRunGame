@@ -35,7 +35,7 @@ public class LobbyPlayerNickname : MonoBehaviourPun
 
     public void SetNickname(Vector3 _pos)
     {
-        int playcount = PhotonNetwork.CountOfPlayersInRooms;
+        //int playcount = PhotonNetwork.CountOfPlayersInRooms;
 
         GameObject playerInfoGo = GameObject.FindGameObjectWithTag("PlayerInfo");
         transform.SetParent(playerInfoGo.transform);
