@@ -18,21 +18,5 @@ public class LobbyPlayer : MonoBehaviourPun
         this.GetComponent<MeshRenderer>().material.color = colors[_playerNum - 1];
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            int actNum = PhotonNetwork.LocalPlayer.ActorNumber;
 
-            GameObject GMgo = GameObject.FindGameObjectWithTag("LobbyGameManager");
-            LobbyGameManager LGM = GMgo.GetComponent<LobbyGameManager>();
-
-            LGM.photonView.RPC("ApplyReady", RpcTarget.All, actNum);
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Debug.LogError(PhotonNetwork.LocalPlayer.ActorNumber);
-        }
-    }
 }

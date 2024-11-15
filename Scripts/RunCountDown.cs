@@ -10,7 +10,8 @@ public class RunCountDown : MonoBehaviour
 {
     // 카운트 다운이 끝난걸 알려주기 위한 델리게이트
     public delegate void CountdownFinishedDelegate();
-    public CountdownFinishedDelegate CountdownFinished;
+    public CountdownFinishedDelegate CountdownFinishedCallback;
+
 
     [SerializeField] private GameObject[] imgs = new GameObject[4];
 
@@ -22,6 +23,8 @@ public class RunCountDown : MonoBehaviour
     // 호출되면 카운트다운 시작
     private IEnumerator CountDownCoroutine()
     {
+        yield return new WaitForSeconds(4f);
+
         for (int i = 0; i < imgs.Length; ++i)
         {
             imgs[i].SetActive(true);
@@ -32,6 +35,7 @@ public class RunCountDown : MonoBehaviour
         }
 
         // 시작했다는걸 알림 -> 타이머 재생, 개인별 기록을 기록하기 위한 타이머, 플레이어 이동가능 => true
-        CountdownFinished?.Invoke();
+        CountdownFinishedCallback?.Invoke();
+
     }
 }
