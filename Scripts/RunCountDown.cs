@@ -12,12 +12,13 @@ public class RunCountDown : MonoBehaviour
     public delegate void CountdownFinishedDelegate();
     public CountdownFinishedDelegate CountdownFinishedCallback;
 
-
     [SerializeField] private GameObject[] imgs = new GameObject[4];
+
 
     private void Start()
     {
         StartCoroutine(CountDownCoroutine());
+
     }
 
     // 호출되면 카운트다운 시작
@@ -36,6 +37,5 @@ public class RunCountDown : MonoBehaviour
 
         // 시작했다는걸 알림 -> 타이머 재생, 개인별 기록을 기록하기 위한 타이머, 플레이어 이동가능 => true
         CountdownFinishedCallback?.Invoke();
-
     }
 }

@@ -20,18 +20,26 @@ public class RunPlayerCtrl : MonoBehaviourPun
     private bool isControl = false;
     private float startTime;
     private float elapsedTime;
+    private RunTimer timer = null;
 
     public float ElapsedTime { get{ return elapsedTime; } }
 
     private void Awake()
     {
-        moveDis = new Vector3(0.1f, 0f, 0f);
+        moveDis = new Vector3(0.5f, 0f, 0f);
     }
 
     private void Start()
     {
+        // 카운트다운이 끝나면 player 시작
         cnt = GameObject.FindGameObjectWithTag("RunCountDown").GetComponent<RunCountDown>();
         cnt.CountdownFinishedCallback += PlayerStart;
+
+        // 타이머가 끝났을때 플레이어 비활성화
+        // 타이머 끝났을때 움직임 false
+        timer = GameObject.FindGameObjectWithTag("RunTimer").GetComponent<RunTimer>();
+        timer.TimeEndCallback += NotMove;
+
     }
 
     // moveDis 만큼 플레이어가 이동
@@ -61,5 +69,12 @@ public class RunPlayerCtrl : MonoBehaviourPun
         // 도착한걸 알려줘야 함. -> RGM한테 알려줘서 (1번이 도착했다 => 모든 컴에 1번도착!) RPC
         RunGM = GameObject.FindGameObjectWithTag("RunGameManager").GetComponent<RunGameManager>();
         RunGM.photonView.RPC("ApplyGoalIn", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+
+        isControl = false;
+    }
+
+    private void NotMove()
+    {
+        isControl = false;
     }
 }

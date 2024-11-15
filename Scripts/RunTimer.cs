@@ -19,7 +19,7 @@ public class RunTimer : MonoBehaviour
 
     private void Awake()
     {
-        currentTime = 5f;
+        currentTime = 30f;
     }
 
     private void Start()
