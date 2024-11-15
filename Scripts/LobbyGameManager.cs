@@ -126,7 +126,11 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
                     playerGoList[viewNum - 1].name = "Player_" + photonViews[j].Owner.NickName;
 
                     if (photonViews[j].gameObject.CompareTag("Player"))
+                    {
                         photonViews[j].gameObject.GetComponent<LobbyPlayer>().SetMaterial(viewNum);
+                        photonViews[j].gameObject.GetComponent<LobbyPlayer>().TextName();
+                    }
+
                     //else if (photonViews[j].gameObject.CompareTag("NickName"))
                     //    photonViews[j].gameObject.GetComponent<LobbyPlayerNickname>().SetNickname(playerPosition[i].position);
                 }
