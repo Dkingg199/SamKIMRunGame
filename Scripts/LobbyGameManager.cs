@@ -25,9 +25,17 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
 
     private GameObject[] playerGoList = new GameObject[4];
 
+    private Vector3[] viewportPositions;
+
 
     private void Start()
     {
+        viewportPositions = new Vector3[playerPosition.Length];
+        for (int i = 0; i < playerPosition.Length; i++)
+        {
+            playerPosition[i].position = Camera.main.WorldToViewportPoint(playerPosition[i].position*100);
+            //playerPosition[i].position += new Vector3(0, 0, 0);
+        }
 
         if (playerPrefab != null)
         {
@@ -123,7 +131,7 @@ public class LobbyGameManager : MonoBehaviourPunCallbacks
                     // 실제 게임오브젝트를 배열에 추가
                     playerGoList[viewNum - 1] = photonViews[j].gameObject;
                     // 게임오브젝트 이름도 알아보기 쉽게 변경
-                    playerGoList[viewNum - 1].name = "Player_" + photonViews[j].Owner.NickName;
+                    playerGoList[viewNum - 1].name = /*"Player_" +*/ photonViews[j].Owner.NickName;
 
                     if (photonViews[j].gameObject.CompareTag("Player"))
                     {
